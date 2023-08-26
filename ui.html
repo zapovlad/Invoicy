@@ -1,0 +1,99 @@
+<h1>Invoicy</h1>
+
+<form id="pluginForm">
+    <fieldset>
+        <legend>Details</legend>
+
+        <p>
+            <label for="invoiceTitle">Title</label>
+            <input type="text" id="invoiceTitle" name="invoiceTitle">
+        </p>
+
+        <p>
+            <label for="invoiceNumber">Number</label>
+            <input type="text" id="invoiceNumber" name="invoiceNumber">
+        </p>
+
+        <p>
+            <label for="dateOfInvoice">Date</label>
+            <input type="date" id="dateOfInvoice" name="dateOfInvoice">
+        </p>
+    </fieldset>
+
+    <fieldset>
+        <legend>From</legend>
+
+        <p>
+            <label for="invoiceSenderName">Name</label>
+            <input type="text" id="invoiceSenderName" name="invoiceSenderName">
+        </p>
+
+        <p>
+            <label for="invoiceSenderEmail">Email</label>
+            <input type="email" id="invoiceSenderEmail" name="invoiceSenderEmail">
+        </p>
+
+        <p>
+            <label for="invoiceSenderAddress">Address</label>
+            <input type="text" id="invoiceSenderAddress" name="invoiceSenderAddress">
+        </p>
+
+        <p>
+            <label for="invoiceSenderPhone">Phone</label>
+            <input type="tel" id="invoiceSenderPhone" name="invoiceSenderPhone">
+        </p>
+
+        <p>
+            <label for="invoiceSenderGstNumber">GST #</label>
+            <input type="text" id="invoiceSenderGstNumber" name="invoiceSenderGstNumber">
+        </p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Bill To</legend>
+
+        <p>
+            <label for="invoiceReceiverName">Name</label>
+            <input type="text" id="invoiceReceiverName" name="invoiceReceiverName">
+        </p>
+
+        <p>
+            <label for="invoiceReceiverEmail">Email</label>
+            <input type="email" id="invoiceReceiverEmail" name="invoiceReceiverEmail">
+        </p>
+
+        <p>
+            <label for="invoiceReceiverAddress">Address</label>
+            <input type="text" id="invoiceReceiverAddress" name="invoiceReceiverAddress">
+        </p>
+
+        <p>
+            <label for="invoiceReceiverPhone">Phone</label>
+            <input type="tel" id="invoiceReceiverPhone" name="invoiceReceiverPhone">
+        </p>
+    </fieldset>
+
+    <button id="generate">Generate Invoice</button>
+
+    <script>
+        document.getElementById('generate').onclick = (event) => {
+
+            // Get the form
+            let pluginForm = document.querySelector('#pluginForm')
+
+            // Get the field data from the form
+            let pluginFormData = new FormData(pluginForm)
+
+            // Create an object and populate it with form data
+            let formDataObj = {}
+
+            for (let[key, value] of pluginFormData) {
+                formDataObj[key] = value
+            }
+
+            console.log(formDataObj)
+
+            parent.postMessage({pluginMessage: {type: 'actionGenerate'}}, '*')
+        }
+    </script>
+</form>
