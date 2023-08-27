@@ -15,8 +15,8 @@
         </p>
 
         <p>
-            <label for="dateOfInvoice">Date</label>
-            <input type="date" id="dateOfInvoice" name="dateOfInvoice">
+            <label for="invoiceDate">Date</label>
+            <input type="date" id="invoiceDate" name="invoiceDate">
         </p>
     </fieldset>
 
@@ -73,6 +73,8 @@
         </p>
     </fieldset>
 
+    <input type="hidden" name="frameDirection" value="vertical">
+
     <button id="generate">Generate Invoice</button>
 
     <script>
@@ -91,9 +93,7 @@
                 formDataObj[key] = value
             }
 
-            console.log(formDataObj)
-
-            parent.postMessage({pluginMessage: {type: 'actionGenerate'}}, '*')
+            parent.postMessage({pluginMessage: {type: 'actionGenerate', formDataObj}}, '*')
         }
     </script>
 </form>
