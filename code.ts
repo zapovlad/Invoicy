@@ -10,7 +10,16 @@ figma.ui.onmessage = async msg => {
     // Desctructure the form data object
     const {invoiceTitle, invoiceNumber, invoiceDate, frameDirection} = msg.formDataObj
 
+    // Converting the date from YYYY/MM/DD format to words
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    function convertDate(invoiceDate: string) {
+      var tempDate = invoiceDate.split("-");
+      return tempDate[2] + " " + months[Number(tempDate[1]) - 1] + " " + tempDate[0];
+    }
+
     const title = invoiceTitle
+    const date = convertDate(invoiceDate)
 
     // Create the frame and name it
     const parentFrame = figma.createFrame()
@@ -20,20 +29,27 @@ figma.ui.onmessage = async msg => {
     parentFrame.layoutMode = frameDirection.toUpperCase() 
     parentFrame.itemSpacing = 8
 
-    parentFrame.primaryAxisSizingMode = 'FIXED'
-    parentFrame.counterAxisSizingMode = 'FIXED'
+    parentFrame.primaryAxisSizingMode = 'AUTO'
+    parentFrame.counterAxisSizingMode = 'AUTO'
 
     // Create the text property in Figma
     const titleNode = figma.createText()
+    const dateNode = figma.createText()
 
     // Name the layer
-    titleNode.name = invoiceTitle
+    titleNode.name = title
+    dateNode.name = date
 
     // Generate the input text into the text property in Figma
     titleNode.characters = title.toString()
+    dateNode.characters = date.toString()
 
     // Size the layer
     titleNode.resize(346, 36)
+
+    // Add the generated nodes to the parent frame
+    parentFrame.appendChild(titleNode)
+    parentFrame.appendChild(dateNode)
 
     // Close the plugin 
     figma.closePlugin('Your invoice is generated. Get that 💰')
