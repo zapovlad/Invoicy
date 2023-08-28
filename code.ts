@@ -19,37 +19,53 @@ figma.ui.onmessage = async msg => {
     }
 
     const title = invoiceTitle
+    const number = invoiceNumber
     const date = convertDate(invoiceDate)
 
     // Create the frame and name it
+
+    /*
     const parentFrame = figma.createFrame()
 
-    parentFrame.name = invoiceTitle + " " + invoiceNumber
+    arentFrame.name = invoiceTitle + " " + invoiceNumber
 
     parentFrame.layoutMode = frameDirection.toUpperCase() 
     parentFrame.itemSpacing = 8
 
     parentFrame.primaryAxisSizingMode = 'AUTO'
     parentFrame.counterAxisSizingMode = 'AUTO'
+    */
+
+    const titleFrame = figma.createFrame()
+
+    titleFrame.name = "Invoice Title + Number"
+    titleFrame.layoutMode = frameDirection.toUpperCase() 
+    titleFrame.itemSpacing = 8
+
+    titleFrame.primaryAxisSizingMode = 'AUTO'
+    titleFrame.counterAxisSizingMode = 'AUTO'
 
     // Create the text property in Figma
     const titleNode = figma.createText()
-    const dateNode = figma.createText()
+    const numberNode = figma.createText()
+    // const dateNode = figma.createText()
 
     // Name the layer
     titleNode.name = title
-    dateNode.name = date
+    numberNode.name = number
+    // dateNode.name = date
 
     // Generate the input text into the text property in Figma
     titleNode.characters = title.toString()
-    dateNode.characters = date.toString()
+    numberNode.characters = number.toString()
+    // dateNode.characters = date.toString()
 
     // Size the layer
-    titleNode.resize(346, 36)
+    titleFrame.resize(531, 36)
 
     // Add the generated nodes to the parent frame
-    parentFrame.appendChild(titleNode)
-    parentFrame.appendChild(dateNode)
+    titleFrame.appendChild(titleNode)
+    titleFrame.appendChild(numberNode)
 
     // Close the plugin 
     figma.closePlugin('Your invoice is generated. Get that 💰')
