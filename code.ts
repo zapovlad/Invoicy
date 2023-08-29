@@ -7,6 +7,13 @@ figma.ui.onmessage = async msg => {
 
   if (msg.type === 'actionGenerate') {
 
+    try {
+      await figma.loadFontAsync({ family: 'Unbounded', style: 'Regular' });
+  
+    } catch(err) {
+      console.error(`Error: ${err}`);
+    }
+
     // Desctructure the form data object
     const {invoiceTitle, invoiceNumber, invoiceDate, frameDirection} = msg.formDataObj
 
@@ -47,9 +54,9 @@ figma.ui.onmessage = async msg => {
     titleFrame.primaryAxisSizingMode = 'AUTO'
     titleFrame.counterAxisSizingMode = 'AUTO'
 
-
     // Create the text property in Figma
     const titleNode = figma.createText()
+    titleNode.fontName = { family: 'Unbounded', style: 'Regular' }
     titleNode.fontSize = 28
     titleNode.lineHeight = { unit: 'PIXELS', value: 32}
     titleNode.letterSpacing = { unit: 'PERCENT', value: -3 }
