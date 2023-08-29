@@ -29,16 +29,7 @@ figma.ui.onmessage = async msg => {
     const number = invoiceNumber
     const date = convertDate(invoiceDate)
 
-    // Create the parent frame and name it
-    const titleDateFrame = figma.createFrame()
-    // titleDateFrame.name = invoiceTitle + " " + invoiceNumber
-    titleDateFrame.name = 'Title + Date Container'
-    titleDateFrame.layoutMode = verticalFrameDirection.toUpperCase() 
-    titleDateFrame.itemSpacing = 8
-    titleDateFrame.fills = [{type : 'SOLID', color: {r: 0.973, g: 0.965, b: 0.945}}]
-    titleDateFrame.primaryAxisSizingMode = 'AUTO'
-    titleDateFrame.counterAxisSizingMode = 'AUTO'
-
+    // Create the title frame and name it
     const titleFrame = figma.createFrame()
     titleFrame.name = "Invoice Title + Number"
     titleFrame.layoutMode = horizontalFrameDirection.toUpperCase() 
@@ -49,6 +40,25 @@ figma.ui.onmessage = async msg => {
     titleFrame.primaryAxisSizingMode = 'AUTO'
     titleFrame.counterAxisSizingMode = 'AUTO'
     titleFrame.counterAxisAlignItems = 'CENTER'
+
+    // Create the details frame and name it
+    const detailsFrame = figma.createFrame()
+    detailsFrame.name = 'Details'
+    detailsFrame.layoutMode = verticalFrameDirection.toUpperCase() 
+    detailsFrame.itemSpacing = 8
+    detailsFrame.fills = [{type : 'SOLID', color: {r: 0.973, g: 0.965, b: 0.945}}]
+    detailsFrame.primaryAxisSizingMode = 'AUTO'
+    detailsFrame.counterAxisSizingMode = 'AUTO'
+
+    const parentFrame = figma.createFrame()
+    parentFrame.name = invoiceTitle + " " + invoiceNumber
+    parentFrame.layoutMode = 'VERTICAL'
+    parentFrame.itemSpacing = 36
+    parentFrame.paddingTop = 48
+    parentFrame.fills = [{type : 'SOLID', color: {r: 0.973, g: 0.965, b: 0.945}}]
+    parentFrame.primaryAxisSizingMode = 'AUTO'
+    parentFrame.counterAxisSizingMode = 'AUTO'
+    parentFrame.counterAxisAlignItems = 'CENTER'
 
     // Create the title text property in Figma
     const titleNode = figma.createText()
@@ -72,7 +82,6 @@ figma.ui.onmessage = async msg => {
     dateNode.letterSpacing = {unit: 'PERCENT', value: -1}
     dateNode.fills = [{type : 'SOLID', color: {r: 0.31, g: 0.302, b: 0.29}}]
 
-
     // Name the layer
     titleNode.name = title
     numberNode.name = number
@@ -83,14 +92,26 @@ figma.ui.onmessage = async msg => {
     numberNode.characters = number.toString()
     dateNode.characters = date.toString()
 
-    // Size the layer
-    titleFrame.resize(531, 36)
+    // Size the details frame
+    detailsFrame.resize(531, 60)
+    detailsFrame.layoutAlign = 'STRETCH'
+    detailsFrame.primaryAxisSizingMode = 'AUTO'
+    detailsFrame.counterAxisSizingMode = 'FIXED'
 
-    // Add the generated nodes to the parent frame
+    // Size the parent frame 
+    parentFrame.resize(595, 820)
+
+    // Add the title and number to the title frame
     titleFrame.appendChild(titleNode)
     titleFrame.appendChild(numberNode)
-    titleDateFrame.appendChild(titleFrame)
-    titleDateFrame.appendChild(dateNode)
+
+    // Add the title frame to the details frame
+    detailsFrame.appendChild(titleFrame)
+
+    // Add the date to the details frame
+    detailsFrame.appendChild(dateNode)
+
+    parentFrame.appendChild(detailsFrame)
 
     // Close the plugin 
     figma.closePlugin('Your invoice is generated. Get that 💰')
