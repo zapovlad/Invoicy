@@ -41,13 +41,24 @@ figma.ui.onmessage = async msg => {
     titleFrame.name = "Invoice Title + Number"
     titleFrame.layoutMode = frameDirection.toUpperCase() 
     titleFrame.itemSpacing = 8
-
+    titleFrame.paddingTop = 1
+    titleFrame.paddingBottom = 3
+    titleFrame.fills = [{type : "SOLID", color: {r: 0.973, g: 0.965, b: 0.945}}];
     titleFrame.primaryAxisSizingMode = 'AUTO'
     titleFrame.counterAxisSizingMode = 'AUTO'
 
+
     // Create the text property in Figma
     const titleNode = figma.createText()
+    titleNode.fontSize = 28
+    titleNode.lineHeight = { unit: 'PIXELS', value: 32}
+    titleNode.letterSpacing = { unit: 'PERCENT', value: -3 }
+
     const numberNode = figma.createText()
+    numberNode.fontSize = 28
+    titleNode.lineHeight = { unit: 'PIXELS', value: 32}
+    titleNode.letterSpacing = { unit: 'PERCENT', value: -3 }
+
     // const dateNode = figma.createText()
 
     // Name the layer
