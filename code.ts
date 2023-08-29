@@ -8,7 +8,7 @@ figma.ui.onmessage = async msg => {
   if (msg.type === 'actionGenerate') {
 
     try {
-      await figma.loadFontAsync({ family: 'Unbounded', style: 'Regular' });
+      await figma.loadFontAsync({ family: 'Unbounded', style: 'Regular'})
   
     } catch(err) {
       console.error(`Error: ${err}`);
@@ -50,21 +50,24 @@ figma.ui.onmessage = async msg => {
     titleFrame.itemSpacing = 8
     titleFrame.paddingTop = 1
     titleFrame.paddingBottom = 3
-    titleFrame.fills = [{type : "SOLID", color: {r: 0.973, g: 0.965, b: 0.945}}];
+    titleFrame.fills = [{type : "SOLID", color: {r: 0.973, g: 0.965, b: 0.945}}]
     titleFrame.primaryAxisSizingMode = 'AUTO'
     titleFrame.counterAxisSizingMode = 'AUTO'
 
     // Create the text property in Figma
     const titleNode = figma.createText()
-    titleNode.fontName = { family: 'Unbounded', style: 'Regular' }
+    titleNode.fontName = {family: 'Unbounded', style: 'Regular'}
     titleNode.fontSize = 28
-    titleNode.lineHeight = { unit: 'PIXELS', value: 32}
-    titleNode.letterSpacing = { unit: 'PERCENT', value: -3 }
+    titleNode.lineHeight = {unit: 'PIXELS', value: 32}
+    titleNode.letterSpacing = {unit: 'PERCENT', value: -3}
+    titleNode.fills = [{type : "SOLID", color: {r: 0.145, g: 0.133, b: 0.125}}]
 
     const numberNode = figma.createText()
     numberNode.fontSize = 28
-    numberNode.lineHeight = { unit: 'PIXELS', value: 32}
-    numberNode.letterSpacing = { unit: 'PERCENT', value: -3 }
+    numberNode.fontName = {family: 'Unbounded', style: 'Regular'}
+    numberNode.lineHeight = {unit: 'PIXELS', value: 32}
+    numberNode.letterSpacing = {unit: 'PERCENT', value: -3}
+    numberNode.fills = [{type : "SOLID", color: {r: 0.725, g: 0.714, b: 0.698}}]
 
     // const dateNode = figma.createText()
 
