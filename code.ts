@@ -1,5 +1,5 @@
 // Show the plugin UI
-figma.showUI(__html__, {width: 400, height:400});
+figma.showUI(__html__, {width: 400, height:716});
 
 figma.ui.onmessage = async msg => {
 
@@ -56,8 +56,8 @@ figma.ui.onmessage = async msg => {
 
     const numberNode = figma.createText()
     numberNode.fontSize = 28
-    titleNode.lineHeight = { unit: 'PIXELS', value: 32}
-    titleNode.letterSpacing = { unit: 'PERCENT', value: -3 }
+    numberNode.lineHeight = { unit: 'PIXELS', value: 32}
+    numberNode.letterSpacing = { unit: 'PERCENT', value: -3 }
 
     // const dateNode = figma.createText()
 
