@@ -18,7 +18,7 @@ figma.ui.onmessage = async msg => {
     const {invoiceTitle, invoiceNumber, invoiceDate, horizontalFrameDirection, verticalFrameDirection} = msg.formDataObj
 
     // Converting the date from YYYY/MM/DD format to words
-    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     function convertDate(invoiceDate: string) {
       var tempDate = invoiceDate.split("-");
@@ -32,10 +32,10 @@ figma.ui.onmessage = async msg => {
     // Create the parent frame and name it
     const titleDateFrame = figma.createFrame()
     // titleDateFrame.name = invoiceTitle + " " + invoiceNumber
-    titleDateFrame.name = "Title + Date Container"
+    titleDateFrame.name = 'Title + Date Container'
     titleDateFrame.layoutMode = verticalFrameDirection.toUpperCase() 
     titleDateFrame.itemSpacing = 8
-    titleDateFrame.fills = [{type : "SOLID", color: {r: 0.973, g: 0.965, b: 0.945}}]
+    titleDateFrame.fills = [{type : 'SOLID', color: {r: 0.973, g: 0.965, b: 0.945}}]
     titleDateFrame.primaryAxisSizingMode = 'AUTO'
     titleDateFrame.counterAxisSizingMode = 'AUTO'
 
@@ -48,6 +48,7 @@ figma.ui.onmessage = async msg => {
     titleFrame.fills = [{type : "SOLID", color: {r: 0.973, g: 0.965, b: 0.945}}]
     titleFrame.primaryAxisSizingMode = 'AUTO'
     titleFrame.counterAxisSizingMode = 'AUTO'
+    titleFrame.counterAxisAlignItems = 'CENTER'
 
     // Create the title text property in Figma
     const titleNode = figma.createText()
@@ -55,21 +56,21 @@ figma.ui.onmessage = async msg => {
     titleNode.fontSize = 28
     titleNode.lineHeight = {unit: 'PIXELS', value: 32}
     titleNode.letterSpacing = {unit: 'PERCENT', value: -3}
-    titleNode.fills = [{type : "SOLID", color: {r: 0.145, g: 0.133, b: 0.125}}]
+    titleNode.fills = [{type : 'SOLID', color: {r: 0.145, g: 0.133, b: 0.125}}]
 
     const numberNode = figma.createText()
     numberNode.fontName = {family: 'Unbounded', style: 'Regular'}
     numberNode.fontSize = 28
     numberNode.lineHeight = {unit: 'PIXELS', value: 32}
     numberNode.letterSpacing = {unit: 'PERCENT', value: -3}
-    numberNode.fills = [{type : "SOLID", color: {r: 0.725, g: 0.714, b: 0.698}}]
+    numberNode.fills = [{type : 'SOLID', color: {r: 0.725, g: 0.714, b: 0.698}}]
 
     const dateNode = figma.createText()
-    dateNode.fontName = { family: "Inter", style: "Regular" }
+    dateNode.fontName = { family: 'Inter', style: 'Regular' }
     dateNode.fontSize = 12
     dateNode.lineHeight = {unit: 'PIXELS', value: 16}
     dateNode.letterSpacing = {unit: 'PERCENT', value: -1}
-    dateNode.fills = [{type : "SOLID", color: {r: 0.31, g: 0.302, b: 0.29}}]
+    dateNode.fills = [{type : 'SOLID', color: {r: 0.31, g: 0.302, b: 0.29}}]
 
 
     // Name the layer
