@@ -15,7 +15,8 @@ figma.ui.onmessage = async msg => {
     }
 
     // Desctructure the form data object
-    const {invoiceTitle, invoiceNumber, invoiceDate, horizontalFrameDirection, verticalFrameDirection} = msg.formDataObj
+    const {invoiceTitle, invoiceNumber, invoiceDate} = msg.formDataObj
+    const fromLabel = msg.legendText
 
     // Converting the date from YYYY/MM/DD format to words
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -28,11 +29,12 @@ figma.ui.onmessage = async msg => {
     const title = invoiceTitle
     const number = invoiceNumber
     const date = convertDate(invoiceDate)
+    const from = fromLabel
 
     // Create the title frame and name it
     const titleFrame = figma.createFrame()
     titleFrame.name = "Invoice Title + Number"
-    titleFrame.layoutMode = horizontalFrameDirection.toUpperCase() 
+    titleFrame.layoutMode = 'HORIZONTAL'
     titleFrame.itemSpacing = 8
     titleFrame.paddingTop = 1
     titleFrame.paddingBottom = 3
@@ -44,7 +46,7 @@ figma.ui.onmessage = async msg => {
     // Create the details frame and name it
     const detailsFrame = figma.createFrame()
     detailsFrame.name = 'Details'
-    detailsFrame.layoutMode = verticalFrameDirection.toUpperCase() 
+    detailsFrame.layoutMode = 'VERTICAL'
     detailsFrame.itemSpacing = 8
     detailsFrame.fills = [{type : 'SOLID', color: {r: 0.973, g: 0.965, b: 0.945}}]
     detailsFrame.primaryAxisSizingMode = 'AUTO'
@@ -82,24 +84,34 @@ figma.ui.onmessage = async msg => {
     dateNode.letterSpacing = {unit: 'PERCENT', value: -1}
     dateNode.fills = [{type : 'SOLID', color: {r: 0.31, g: 0.302, b: 0.29}}]
 
+    
+    const fromNode = figma.createText()
+    fromNode.fontName = { family: 'Inter', style: 'Regular' }
+    fromNode.fontSize = 12
+    fromNode.lineHeight = {unit: 'PIXELS', value: 16}
+    fromNode.letterSpacing = {unit: 'PERCENT', value: -1}
+    fromNode.fills = [{type : 'SOLID', color: {r: 0.31, g: 0.302, b: 0.29}}]
+    
+
     // Name the layer
     titleNode.name = title
     numberNode.name = number
     dateNode.name = date
+    fromNode.name = from
 
     // Generate the input text into the text property in Figma
     titleNode.characters = title.toString()
     numberNode.characters = number.toString()
     dateNode.characters = date.toString()
+    fromNode.characters = from.toString()
 
     // Size the details frame
-    detailsFrame.resize(531, 60)
-    detailsFrame.layoutAlign = 'STRETCH'
+    detailsFrame.resize(528, 60)
     detailsFrame.primaryAxisSizingMode = 'AUTO'
     detailsFrame.counterAxisSizingMode = 'FIXED'
 
-    // Size the parent frame 
-    parentFrame.resize(595, 820)
+    // Size the 
+    parentFrame.resize(592, 820)
 
     // Add the title and number to the title frame
     titleFrame.appendChild(titleNode)
@@ -110,8 +122,8 @@ figma.ui.onmessage = async msg => {
 
     // Add the date to the details frame
     detailsFrame.appendChild(dateNode)
-
     parentFrame.appendChild(detailsFrame)
+    parentFrame.appendChild(fromNode)
 
     // Close the plugin 
     figma.closePlugin('Your invoice is generated. Get that 💰')
