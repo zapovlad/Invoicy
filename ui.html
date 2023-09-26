@@ -50,7 +50,7 @@
     </fieldset>
 
     <fieldset>
-        <legend>Bill To</legend>
+        <legend for="toLabel" type="legend" id="toLabel">Bill to</legend>
 
         <p>
             <label for="invoiceReceiverName">Name</label>
@@ -83,8 +83,8 @@
 
             // Get the form
             let pluginForm = document.querySelector('#pluginForm')
-            let legendElement = document.getElementById('fromLabel')
-            let legendText = legendElement.textContent
+            let legendFromText = document.getElementById('fromLabel').textContent
+            let legendToText = document.getElementById('toLabel').textContent
 
             // Get the field data from the form
             let pluginFormData = new FormData(pluginForm)
@@ -96,7 +96,7 @@
                 formDataObj[key] = value
             }
 
-            parent.postMessage({pluginMessage: {type: 'actionGenerate', legendText, formDataObj}}, '*')
+            parent.postMessage({pluginMessage: {type: 'actionGenerate', legendFromText, legendToText, formDataObj}}, '*')
         }
     </script>
 
