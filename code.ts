@@ -15,17 +15,15 @@ figma.ui.onmessage = async msg => {
     }
 
     // Desctructure the form data object
-    const {invoiceTitle, invoiceNumber, invoiceDate, senderName} = msg.formDataObj
+    const {invoiceTitle, invoiceNumber, invoiceDate, senderName, receiverName} = msg.formDataObj
     const fromLabel = msg.legendFromText
     const toLabel = msg.legendToText
 
-    // Converting the date from YYYY/MM/DD format to words
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-    function convertDate(invoiceDate: string) {
-      var tempDate = invoiceDate.split("-");
-      return months[Number(tempDate[1]) - 1] + " " + tempDate[2] + ", " + tempDate[0];
-    }
+    function convertDate(invoiceDate: string): string {
+      const months: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const [year, month, day] = invoiceDate.split("-");
+      return `${months[Number(month) - 1]} ${day}, ${year}`;
+  }
 
     const title = invoiceTitle
     const number = invoiceNumber
@@ -33,6 +31,7 @@ figma.ui.onmessage = async msg => {
     const from = fromLabel
     const sender = senderName
     const to = toLabel
+    const receiver = receiverName
 
     // Create the parent frame and name it
     const parentFrame = figma.createFrame()
@@ -78,7 +77,7 @@ figma.ui.onmessage = async msg => {
     contactsFrame.counterAxisSizingMode = 'AUTO'
 
     const senderNameFrame = figma.createFrame()
-    senderNameFrame.name = 'Name'
+    senderNameFrame.name = 'Sender'
     senderNameFrame.layoutMode = 'VERTICAL'
     senderNameFrame.itemSpacing = 8
     senderNameFrame.fills = [{type : 'SOLID', color: {r: 0.973, g: 0.965, b: 0.945}}]
@@ -87,7 +86,7 @@ figma.ui.onmessage = async msg => {
     senderNameFrame.counterAxisSizingMode = 'FIXED'
 
     const receiverNameFrame = figma.createFrame()
-    receiverNameFrame.name = 'Name'
+    receiverNameFrame.name = 'Receiver'
     receiverNameFrame.layoutMode = 'VERTICAL'
     receiverNameFrame.itemSpacing = 8
     receiverNameFrame.fills = [{type : 'SOLID', color: {r: 0.973, g: 0.965, b: 0.945}}]
@@ -124,6 +123,13 @@ figma.ui.onmessage = async msg => {
     fromNode.letterSpacing = {unit: 'PERCENT', value: -1}
     fromNode.fills = [{type: 'SOLID', color: {r: 0.576, g: 0.561, b: 0.545}}]
 
+    const senderNode = figma.createText()
+    senderNode.fontName = {family: 'Unbounded', style: 'Regular'}
+    senderNode.fontSize = 16
+    senderNode.lineHeight = {unit: 'PIXELS', value: 20}
+    senderNode.letterSpacing = {unit: 'PERCENT', value: -2}
+    senderNode.fills = [{type: 'SOLID', color: {r: 0.145, g: 0.133, b: 0.125}}]
+
     const toNode = figma.createText()
     toNode.fontName = { family: 'Inter', style: 'Regular' }
     toNode.fontSize = 12
@@ -131,12 +137,12 @@ figma.ui.onmessage = async msg => {
     toNode.letterSpacing = {unit: 'PERCENT', value: -1}
     toNode.fills = [{type: 'SOLID', color: {r: 0.576, g: 0.561, b: 0.545}}]
 
-    const senderNode = figma.createText()
-    senderNode.fontName = {family: 'Unbounded', style: 'Regular'}
-    senderNode.fontSize = 16
-    senderNode.lineHeight = {unit: 'PIXELS', value: 20}
-    senderNode.letterSpacing = {unit: 'PERCENT', value: -2}
-    senderNode.fills = [{type: 'SOLID', color: {r: 0.145, g: 0.133, b: 0.125}}]
+    const receiverNode = figma.createText()
+    receiverNode.fontName = {family: 'Unbounded', style: 'Regular'}
+    receiverNode.fontSize = 16
+    receiverNode.lineHeight = {unit: 'PIXELS', value: 20}
+    receiverNode.letterSpacing = {unit: 'PERCENT', value: -2}
+    receiverNode.fills = [{type: 'SOLID', color: {r: 0.145, g: 0.133, b: 0.125}}]
 
     // Name the layer
     titleNode.name = title
@@ -145,6 +151,7 @@ figma.ui.onmessage = async msg => {
     fromNode.name = from
     toNode.name = to
     senderNode.name = sender
+    receiverNode.name = receiver
 
     // Generate the input text into the text property in Figma
     titleNode.characters = title.toString()
@@ -153,6 +160,7 @@ figma.ui.onmessage = async msg => {
     fromNode.characters = from.toString()
     toNode.characters = to.toString()
     senderNode.characters = sender.toString()
+    receiverNode.characters = receiver.toString()
 
     // Add the title and number to the title frame
     titleFrame.appendChild(titleNode)
@@ -166,8 +174,9 @@ figma.ui.onmessage = async msg => {
     parentFrame.appendChild(detailsFrame)
 
     senderNameFrame.appendChild(fromNode)
-    receiverNameFrame.appendChild(toNode)
     senderNameFrame.appendChild(senderNode)
+    receiverNameFrame.appendChild(toNode)
+    receiverNameFrame.appendChild(receiverNode)
 
     contactsFrame.appendChild(senderNameFrame)
     contactsFrame.appendChild(receiverNameFrame)
