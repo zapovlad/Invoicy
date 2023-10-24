@@ -15,7 +15,7 @@ figma.ui.onmessage = async msg => {
     }
 
     // Desctructure the form data object
-    const {invoiceTitle, invoiceNumber, invoiceDate, invoiceSenderName} = msg.formDataObj
+    const {invoiceTitle, invoiceNumber, invoiceDate, senderName} = msg.formDataObj
     const fromLabel = msg.legendFromText
     const toLabel = msg.legendToText
 
@@ -31,7 +31,7 @@ figma.ui.onmessage = async msg => {
     const number = invoiceNumber
     const date = convertDate(invoiceDate)
     const from = fromLabel
-    const sender = invoiceSenderName
+    const sender = senderName
     const to = toLabel
 
     // Create the parent frame and name it
