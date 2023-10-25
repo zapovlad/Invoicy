@@ -31,13 +31,11 @@ figma.ui.onmessage = async msg => {
     function convertDate(invoiceDate: string): string {
       const months: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
       const [year, month, day] = invoiceDate.split("-");
-      return `${months[Number(month) - 1]} ${day}, ${year}`;
-  }
+    
+      return `${months[Number(month) - 1]} ${Number(day)}, ${year}`; // Convert day to a number to remove leading zero and then interpolate it directly
+    }
 
   const formattedDate = convertDate(invoiceDate)
-
-    const title = invoiceTitle
-    const number = invoiceNumber
 
     // Create the parent frame and name it
     const parentFrame = figma.createFrame()
@@ -159,8 +157,8 @@ figma.ui.onmessage = async msg => {
     receiverNameNode.fills = [{type: 'SOLID', color: {r: 0.145, g: 0.133, b: 0.125}}]
 
     // Name the layer
-    titleNode.name = title
-    numberNode.name = number
+    titleNode.name = invoiceTitle
+    numberNode.name = invoiceNumber
     dateNode.name = formattedDate
 
     senderLabelNode.name = legendSenderLabel
@@ -170,8 +168,8 @@ figma.ui.onmessage = async msg => {
     receiverNameNode.name = receiverName
 
     // Generate the input text into the text property in Figma
-    titleNode.characters = title.toString()
-    numberNode.characters = number.toString()
+    titleNode.characters = invoiceTitle.toString()
+    numberNode.characters = invoiceNumber.toString()
     dateNode.characters = formattedDate.toString()
 
     senderLabelNode.characters = legendSenderLabel.toString()
