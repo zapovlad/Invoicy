@@ -23,7 +23,7 @@
     </fieldset>
 
     <fieldset>
-        <legend for="fromLabel" type="legend" id="fromLabel">From</legend>
+        <legend for="senderLabel" type="legend" id="senderLabel">From</legend>
 
         <p>
             <label for="senderName">Name</label>
@@ -62,7 +62,7 @@
     </fieldset>
 
     <fieldset>
-        <legend for="toLabel" type="legend" id="toLabel">To</legend>
+        <legend for="receiverLabel" type="legend" id="receiverLabel">To</legend>
 
         <p>
             <label for="receiverName">Name</label>
@@ -95,8 +95,8 @@
 
             // Get the form
             let pluginForm = document.querySelector('#pluginForm')
-            let legendFromText = document.getElementById('fromLabel').textContent
-            let legendToText = document.getElementById('toLabel').textContent
+            let legendSenderLabel = document.getElementById('senderLabel').textContent
+            let legendReceiverLabel = document.getElementById('receiverLabel').textContent
 
             // Get the field data from the form
             let pluginFormData = new FormData(pluginForm)
@@ -108,7 +108,7 @@
                 formDataObj[key] = value
             }
 
-            parent.postMessage({pluginMessage: {type: 'actionGenerate', legendFromText, legendToText, formDataObj}}, '*')
+            parent.postMessage({pluginMessage: {type: 'actionGenerate', legendSenderLabel, legendReceiverLabel, formDataObj}}, '*')
         }
     </script>
 

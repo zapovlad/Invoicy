@@ -15,9 +15,19 @@ figma.ui.onmessage = async msg => {
     }
 
     // Desctructure the form data object
-    const {invoiceTitle, invoiceNumber, invoiceDate, senderName, receiverName} = msg.formDataObj
-    const fromLabel = msg.legendFromText
-    const toLabel = msg.legendToText
+
+    const {
+      invoiceTitle,
+      invoiceNumber,
+      invoiceDate,
+      senderName,
+      receiverName
+    } = msg.formDataObj;
+
+    const {
+      legendSenderLabel,
+      legendReceiverLabel
+    } = msg;
 
     function convertDate(invoiceDate: string): string {
       const months: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -25,12 +35,13 @@ figma.ui.onmessage = async msg => {
       return `${months[Number(month) - 1]} ${day}, ${year}`;
   }
 
+  const formattedDate = convertDate(invoiceDate)
+
     const title = invoiceTitle
     const number = invoiceNumber
-    const date = convertDate(invoiceDate)
-    const from = fromLabel
+    const from = legendSenderLabel
     const sender = senderName
-    const to = toLabel
+    const to = legendReceiverLabel
     const receiver = receiverName
 
     // Create the parent frame and name it
@@ -147,16 +158,16 @@ figma.ui.onmessage = async msg => {
     // Name the layer
     titleNode.name = title
     numberNode.name = number
-    dateNode.name = date
-    fromNode.name = from
-    toNode.name = to
+    dateNode.name = formattedDate
+    fromNode.name = legendSenderLabel
+    toNode.name = legendReceiverLabel
     senderNode.name = sender
     receiverNode.name = receiver
 
     // Generate the input text into the text property in Figma
     titleNode.characters = title.toString()
     numberNode.characters = number.toString()
-    dateNode.characters = date.toString()
+    dateNode.characters = formattedDate.toString()
     fromNode.characters = from.toString()
     toNode.characters = to.toString()
     senderNode.characters = sender.toString()
