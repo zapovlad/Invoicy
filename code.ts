@@ -52,9 +52,17 @@ figma.ui.onmessage = async msg => {
     parentFrame.paddingTop = 48
     parentFrame.fills = [{type : 'SOLID', color: {r: 0.973, g: 0.965, b: 0.945}}]
     parentFrame.resize(592, 820)
-    parentFrame.primaryAxisSizingMode = 'FIXED'
+    parentFrame.primaryAxisSizingMode = 'AUTO'
     parentFrame.counterAxisSizingMode = 'FIXED'
     parentFrame.counterAxisAlignItems = 'CENTER'
+
+    const infoFrame = figma.createFrame()
+    infoFrame.name = 'Info'
+    infoFrame.layoutMode = 'VERTICAL'
+    infoFrame.itemSpacing = 24
+    infoFrame.fills = [{type : 'SOLID', color: {r: 0.973, g: 0.965, b: 0.945}}]
+    infoFrame.primaryAxisSizingMode = 'AUTO'
+    infoFrame.counterAxisSizingMode = 'AUTO'
 
     // Create the details frame and name it
     const detailsFrame = figma.createFrame()
@@ -182,7 +190,7 @@ figma.ui.onmessage = async msg => {
 
     // Add the date to the details frame
     detailsFrame.appendChild(dateNode)
-    parentFrame.appendChild(detailsFrame)
+    parentFrame.appendChild(infoFrame)
 
     senderNameFrame.appendChild(fromNode)
     senderNameFrame.appendChild(senderNode)
@@ -192,7 +200,8 @@ figma.ui.onmessage = async msg => {
     contactsFrame.appendChild(senderNameFrame)
     contactsFrame.appendChild(receiverNameFrame)
 
-    parentFrame.appendChild(contactsFrame)
+    infoFrame.appendChild(detailsFrame)
+    infoFrame.appendChild(contactsFrame)
 
     // Close the plugin 
     figma.closePlugin('Your invoice is generated. Get that 💰')
