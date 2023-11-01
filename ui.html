@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="styles.css">
-<script src="path-to-compiled-js/ui.js"></script>
 
 <h1>Invoicy</h1>
 
@@ -86,19 +85,6 @@
         </p>
     </fieldset>
 
-    <fieldset>
-        <legend>Services</legend>
-    
-        <div id="servicesContainer">
-            <p class="service">
-                <label for="service1">Service</label>
-                <input type="text" id="service1" name="services[]">
-            </p>
-        </div>
-    
-        <button type="button" id="addServiceBtn">Add Another Service</button>
-    </fieldset>
-
     <input type="hidden" name="horizontalFrameDirection" value="horizontal">
     <input type="hidden" name="verticalFrameDirection" value="vertical">
 
@@ -124,6 +110,10 @@
 
             parent.postMessage({pluginMessage: {type: 'actionGenerate', legendSenderLabel, legendReceiverLabel, formDataObj}}, '*')
         }
+    </script>
+
+    <script>
+        console.log('Inline script is running!');
     </script>
 
 </form>
