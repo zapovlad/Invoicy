@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="styles.css">
+<script src="path-to-compiled-js/ui.js"></script>
 
 <h1>Invoicy</h1>
 
@@ -83,6 +84,19 @@
             <label for="receiverPhone">Phone</label>
             <input type="tel" id="receiverPhone" name="receiverPhone">
         </p>
+    </fieldset>
+
+    <fieldset>
+        <legend>Services</legend>
+    
+        <div id="servicesContainer">
+            <p class="service">
+                <label for="service1">Service</label>
+                <input type="text" id="service1" name="services[]">
+            </p>
+        </div>
+    
+        <button type="button" id="addServiceBtn">Add Another Service</button>
     </fieldset>
 
     <input type="hidden" name="horizontalFrameDirection" value="horizontal">
